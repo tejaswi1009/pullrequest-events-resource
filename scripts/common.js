@@ -125,6 +125,7 @@ async function getMergedPullRequests(stdinConfig) {
   let after = undefined;
   if (stdinConfig["version"]) {
     after = stdinConfig["version"].cursor
+    console.error("test", after)
   }
   
 
@@ -219,7 +220,7 @@ function convertToVersions(pullRequests, sourceConfig) {
       url: pr.node.url,
       baseBranch: pr.node.baseRefName,
       headBranch: pr.node.headRefName,
-      Updatedtime: pr.node.UpdatedAt,
+      updatedAt: pr.node.UpdatedAt,
       state: finalState,
       // if merged or closed will have either of these timestamps
       // merged prs have both merged and closed
