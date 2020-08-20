@@ -125,7 +125,7 @@ async function getMergedPullRequests(stdinConfig) {
   let after = undefined;
   if (stdinConfig["version"]) {
     after = stdinConfig["version"].cursor
-    console.error("test", after)
+    console.log("test", after)
   }
   
 
