@@ -122,10 +122,10 @@ async function getMergedPullRequests(stdinConfig) {
 
   // if a version was passed in, set .cursor as after
   // to grab only the versions after the cursor
-  //let after = undefined;
-  //if (stdinConfig["version"]) {
-  //  after = stdinConfig["version"].cursor
-  //}
+  let after = undefined;
+  if (stdinConfig["version"]) {
+    after = stdinConfig["version"].cursor
+  }
   
 
   // setup the client
@@ -147,7 +147,7 @@ async function getMergedPullRequests(stdinConfig) {
       $repo: String!, 
       $baseBranch: String!, 
       $last: Int!,
-     // $after: String,
+      $after: String,
       $states: [PullRequestState!]!
     ) {
       repository(owner: $owner, name: $repo) {
@@ -158,7 +158,7 @@ async function getMergedPullRequests(stdinConfig) {
           baseRefName: $baseBranch, 
           states: $states, 
           orderBy:{field:CREATED_AT, direction:ASC}
-         // after: $after
+          after: $after
         ) {
           edges {
             cursor
@@ -186,7 +186,7 @@ async function getMergedPullRequests(stdinConfig) {
       repo,
       baseBranch,
       last,
-      //after,
+      after,
       states
     }
   });
@@ -218,7 +218,6 @@ function convertToVersions(pullRequests, sourceConfig) {
       url: pr.node.url,
       baseBranch: pr.node.baseRefName,
       headBranch: pr.node.headRefName,
-      updatedAt: pr.node.UpdatedAt,
       state: finalState,
       // if merged or closed will have either of these timestamps
       // merged prs have both merged and closed
