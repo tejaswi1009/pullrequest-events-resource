@@ -158,7 +158,7 @@ async function getMergedPullRequests(stdinConfig) {
           last: $last,
           baseRefName: $baseBranch, 
           states: $states, 
-          orderBy:{field:UPDATED_AT, direction:ASC},
+          orderBy:{field:CREATED_AT, direction:ASC},
           after: $after
         ) {
           edges {
