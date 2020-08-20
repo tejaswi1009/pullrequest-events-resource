@@ -122,11 +122,10 @@ async function getMergedPullRequests(stdinConfig) {
 
   // if a version was passed in, set .cursor as after
   // to grab only the versions after the cursor
-  let after = undefined;
-  if (stdinConfig["version"]) {
-    after = stdinConfig["version"].cursor
-    console.log("test", after)
-  }
+  //let after = undefined;
+  //if (stdinConfig["version"]) {
+  //  after = stdinConfig["version"].cursor
+  //}
   
 
   // setup the client
@@ -148,7 +147,7 @@ async function getMergedPullRequests(stdinConfig) {
       $repo: String!, 
       $baseBranch: String!, 
       $last: Int!,
-      $after: String,
+     // $after: String,
       $states: [PullRequestState!]!
     ) {
       repository(owner: $owner, name: $repo) {
@@ -158,8 +157,8 @@ async function getMergedPullRequests(stdinConfig) {
           last: $last,
           baseRefName: $baseBranch, 
           states: $states, 
-          orderBy:{field:CREATED_AT, direction:ASC},
-          after: $after
+          orderBy:{field:CREATED_AT, direction:ASC}
+         // after: $after
         ) {
           edges {
             cursor
@@ -173,7 +172,6 @@ async function getMergedPullRequests(stdinConfig) {
               closed
               mergedAt
               closedAt
-              updatedAt
             }
           }
         }
@@ -188,7 +186,7 @@ async function getMergedPullRequests(stdinConfig) {
       repo,
       baseBranch,
       last,
-      after,
+      //after,
       states
     }
   });
