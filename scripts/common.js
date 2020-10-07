@@ -172,9 +172,6 @@ async function getMergedPullRequests(stdinConfig) {
               closed
               mergedAt
               closedAt
-              comments {
-                totalCount
-               }
             }
           }
         }
@@ -209,11 +206,11 @@ function convertToVersions(pullRequests, sourceConfig) {
   let versions = [];
 
   for (let pr of pullRequests) {
-   
+
     // since this resource only checks MERGED or CLOSED
     // if it isn't merged, then it will be closed
     let finalState = pr.node.merged ? 'MERGED' : 'CLOSED'
-   if (pr.node.comments.totalCount = 0){
+
     versions.push({
       id: pr.node.id,
       cursor: pr.cursor,
@@ -226,7 +223,6 @@ function convertToVersions(pullRequests, sourceConfig) {
       // merged prs have both merged and closed
       timestamp: pr.node.mergedAt || pr.node.closedAt
     })
-   }
   }
 
   // if a version was given, concat the resulting versions
